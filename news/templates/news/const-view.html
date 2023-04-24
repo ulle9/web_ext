@@ -1,0 +1,26 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Изменение конституенты{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h2>Просмотр конституенты</h2>
+        <br>
+        <form id="CreateConst" autocomplete="off">
+            {% csrf_token %}
+            {{ form.cstType }} {{ form.alias }}<br><br>
+            {{form.convention}}<br><br>
+            {{form.term_raw}}<br><br>
+            {{form.definition_formal}}<br><br>
+            {{form.definition_text_raw}}<br><br><br>
+            {{form.aliases}}
+            <div id = "alias_error"></div>
+            <a href="{{request.META.HTTP_REFERER}}" class = 'btn btn-light btn-sm'>Назад</a><br>
+
+        </form>
+    <br>
+
+    </div>
+
+<script src="{% static 'main/js/main.js' %}" type="text/javascript"></script>
+{% endblock %}

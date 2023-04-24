@@ -1,0 +1,16 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Удаление записи{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h2>Удаление конституенты</h2><br>
+        <b>Вы действительно хотите удалить конституенту?</b><br><br>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-sm" type="submit">Удалить конституенту</button>
+            <a href="{% url 'schema-detail' schema %}" class = 'btn btn-light btn-sm'>Отмена</a><br>
+        </form>
+
+    </div>
+{% endblock %}

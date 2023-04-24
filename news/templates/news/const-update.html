@@ -1,0 +1,53 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Изменение конституенты{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h2>Изменение конституенты</h2>
+<!--        Схема: <b>{{ const }}</b><br>-->
+<!--        Конституента: <b>{{ const }}</b><br>-->
+        <br>
+        <form id="CreateConst" method="post" autocomplete="off">
+            {% csrf_token %}
+            {{ form.cstType }} {{ form.alias }}<br><br>
+            {{form.convention}}<br><br>
+            {{form.term_raw}}<br><br>
+            {{form.definition_formal}}
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('ℬ','inputSign');" type="button">ℬ</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('×','inputSign');" type="button">×</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∀','inputSign');" type="button">∀</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∃','inputSign');" type="button">∃</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('¬','inputSign');" type="button">¬</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∨','inputSign');" type="button">∨</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('&','inputSign');" type="button">&</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('⇒','inputSign');" type="button">⇒</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('⇔','inputSign');" type="button">⇔</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∅','inputSign');" type="button">∅</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('≠','inputSign');" type="button">≠</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∈','inputSign');" type="button">∈</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∉','inputSign');" type="button">∉</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('⊂','inputSign');" type="button">⊂</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('⊄','inputSign');" type="button">⊄</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('⊆','inputSign');" type="button">⊆</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∩','inputSign');" type="button">∩</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∪','inputSign');" type="button">∪</button>
+            <button class="btn btn-outline-light btn-sm" onClick="insertThisInThere('∆','inputSign');" type="button">∆</button>
+            <br><br>
+            {{form.definition_text_raw}}<br><br>
+            {{form.aliases}}
+
+            <span>{{ error }}</span>
+            <div id = "alias_error"></div>
+<!--            <div id = "Ошибка!"></div>-->
+            <br>
+            <button class="btn btn-success btn-sm" type="submit">Сохранить</button>
+            <a href="{{request.META.HTTP_REFERER}}" class = 'btn btn-light btn-sm'>Отмена</a><br>
+
+        </form>
+    <br />
+
+    </div>
+
+<script src="{% static 'main/js/main.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} {{ schema.name }} {% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h2>{{ schema.schema }}</h2>
+        <p>{{ schema.name }}</p>
+
+        {% if schema.json_file.items %}
+            <table class="table table-dark table-sm">
+              <thead>
+                <tr>
+                  <th width="2%" scope="col">#</th>
+                  <th width="13%" scope="col">Конституента</th>
+                  <th width="5%" scope="col">Тип</th>
+                  <th width="20%" scope="col">Термин</th>
+                  <th width="27%" scope="col">РС-определение</th>
+                  <th width="7%" scope="col">Статус</th>
+                  <th width="8%" scope="col">Типизация</th>
+                  <th width="10%" scope="col">Просмотр</th>
+                </tr>
+              </thead>
+        <tbody>
+        </tbody>
+            </table>
+            {% for i in schema.json_file.items %}
+              <table >
+                <tbody>
+                <tr>
+                  <td width="2%">{{ forloop.counter }}</td>
+                  <td width="13%">{{i.cstType}}</td>
+                  <td width="5%">{{i.alias}}</td>
+                  <td width="20%">{{i.term.raw}}</td>
+                  <td width="27%">{{i.definition.formal}}</td>
+                  <th width="7%">{{i.parse.status}}</th>
+                  <th width="8%">{{i.parse.typification}}</th>
+                  <td width="10%"><a href="{% url 'const-view' schema.id i.entityUID %}" class = 'btn btn-info btn-sm'>Просмотр</a></td>
+                </tr>
+              </tbody>
+            </table>
+<!--                <div class = "alert alert-warning">-->
+<!--                <a>cstType:</a> {{i.cstType}}<br>-->
+<!--                <a>alias:</a> {{i.alias}}<br>-->
+<!--                <a>convention:</a> {{i.convention}}<br>-->
+<!--                <a>term.raw:</a> {{i.term.raw}}<br>-->
+<!--                <a>definition.formal:</a> {{i.definition.formal}}<br>-->
+<!--                <a>definition.text.raw:</a> {{i.definition.text.raw}}<br>-->
+<!--                <a href="{% url 'const-update' schema.id i.entityUID %}" class = 'btn btn-info btn-sm'>Изменить конституенту</a>-->
+<!--                <a href="{% url 'const-delete' schema.id i.entityUID %}" class = 'btn btn-danger btn-sm'>Удалить конституенту</a>-->
+<!--        <br>-->
+<!--                </div>-->
+            {% endfor %}
+        {% else %}
+            <p>Конституенты отсутствуют.</p>
+
+        {% endif %}
+        <br>
+
+    </div>
+
+{% endblock %}

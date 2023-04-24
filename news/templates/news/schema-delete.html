@@ -1,0 +1,16 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Удаление записи{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h2>Удаление схемы</h2><br>
+        <b>Вы действительно хотите полностью удалить схему со всеми конституентами?</b><br><br>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-sm" type="submit">Удалить схему</button>
+            <a href="{{request.META.HTTP_REFERER}}" class = 'btn btn-light btn-sm'>Отмена</a><br>
+        </form>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Редактирование схемы{% endblock %}
+
+{% block content %}
+     <div class="features">
+        <h2>Редактирование схемы</h2>
+            <form id="CreateSchema" method="post" autocomplete="off">
+                {% csrf_token %}
+                <table>
+                  <tr>
+                    <td style="width:15%;">Наименование:</td>
+                    <td>{{ form.schema }}</td>
+                  </tr>
+                    <br>
+                  <tr>
+                    <td style="width:15%">Краткое имя:</td>
+                    <td>{{ form.alias }}</td>
+                  </tr>
+                  <tr>
+                    <td style="width:15%">Общая схема:</td>
+                    <td>{{ form.common }}</td>
+                  </tr>
+                </table>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="error_text">{{ error }}</div><br><br>
+                    {% endfor %}
+                {% endif %}
+                <div id = "Ошибка!"></div><br>
+<!--                <h4><span>{{ error }}</span></h4><br>-->
+<!--                <h4><span>{{ form.non_field_errors }}</span></h4>-->
+                <button class="btn btn-success btn-sm" type="submit">Сохранить</button>
+                <a href="{{request.META.HTTP_REFERER}}" class = 'btn btn-light btn-sm'>Отмена</a><br>
+            </form>
+    </div>
+{% endblock %}

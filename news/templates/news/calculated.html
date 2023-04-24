@@ -1,0 +1,29 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Сохранение{% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h2>Сохранение</h2>
+
+
+
+            {{ form.schema }}<br>
+            {{ form.name }} {{ form.type }}<br>
+            <br>
+            {{ form.rs_definition }}<br>
+            {{ form.term }}<br>
+            {{ form.text_definition }}<br>
+            {{ form.result }}<br>
+            <br>
+            <span>{{ error }}</span>
+            <div id = "error1"></div>
+            <br>
+            <a class="btn btn-success" href="{% url 'news-home' %}">Сохранить</a>
+            <a href="{% url 'news-update' id %}" class = 'btn btn-info'>Редактировать</a>
+            <a href="{% url 'news-delete' id %}" class = 'btn btn-danger'>Удалить</a>
+
+    <br />
+
+    </div>
+{% endblock %}

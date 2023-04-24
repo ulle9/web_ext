@@ -1,0 +1,39 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Добавление схемы{% endblock %}
+
+{% block content %}
+
+    <div class="features">
+        <h2>Добавление схемы</h2>
+            <form id="CreateSchema" method="post" autocomplete="off">
+                {% csrf_token %}
+                <table>
+                  <tr>
+                    <td style="width:40%;">Наименование:</td>
+                    <td>{{ form.schema }}</td>
+                  </tr>
+                    <br>
+                  <tr>
+                    <td style="width:40%">Краткое имя:</td>
+                    <td>{{ form.alias }}</td>
+                  </tr>
+                  <tr>
+                    <td style="width:40%">Схема будет доступна для просмотра всем пользователям? </td>
+                    <td>{{ form.common }}</td>
+                  </tr>
+                </table>
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="error_text">{{ error }}</div><br><br>
+                    {% endfor %}
+                {% endif %}
+                <div id = "Ошибка!"></div><br>
+<!--                <h5><span>{{ error }}</span></h5><br>-->
+<!--                <h4><span>{{ form.non_field_errors }}</span></h4>-->
+                <button class="btn btn-success btn-sm" type="submit">Сохранить</button>
+                <a href="{% url 'exteor-schemas' %}" class = 'btn btn-light btn-sm'>Отмена</a><br>
+            </form>
+    </div>
+
+{% endblock %}
