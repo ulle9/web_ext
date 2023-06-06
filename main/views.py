@@ -4,7 +4,7 @@ from django.shortcuts import render
 def index(request):
     num_visits = request.session.get('num_visits', 0)
     request.session['num_visits'] = num_visits + 1
-    data = {'title': "Главная страница",
+    data = {'title': "Инструментарий для работы с концептуальными схемами в родоструктурной форме",
             'values': ['some', 'hello', 123],
             'obj': {'car': 'BMW', 'age': 42, 'hobby': 'football'},
             'num_visits': num_visits}

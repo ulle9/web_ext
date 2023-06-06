@@ -4,39 +4,42 @@
 
 {% block content %}
 <div class="features">
-{% if form.errors %}
-  <p>Такое сочетание имя/пароль не зарегистрированы.</p>
-{% endif %}
 
 {% if next %}
   {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p>У вас нет доступа к данной странице. Для продолжения войдите под пользователем, имеющим доступ.</p>
   {% else %}
-    <p>Пожалуйста, войдите в аккаунт, чтобы увидеть данную страницу</p>
+    <h2>Вход в аккаунт</h2>
   {% endif %}
 {% endif %}
-
+<br>
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
-<table>
+<table class="table table-dark table-sm">
 
 <tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
+  <td><h5>{{ form.username.label_tag }}</h5></td>
+  <td><h5>{{ form.username }}</h5></td>
 </tr>
 
 <tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
+  <td><h5>{{ form.password.label_tag }}</h5></td>
+  <td><h5>{{ form.password }}</h5></td>
 </tr>
 </table>
 
-<input type="submit" value="login" />
+  {% if form.errors %}
+     <p>Такое сочетание имя/пароль не зарегистрированы.</p>
+     <br>
+  {% endif %}
+
+<button class="btn btn-success btn" type="submit">Войти</button>
 <input type="hidden" name="next" value="{{ next }}" />
+
+
 </form>
 
-{# Assumes you setup the password_reset view in your URLconf #}
+  <br>
   <p><a href="{% url 'signup' %}">Регистрация</a><span>&nbsp&nbsp&nbsp&nbsp</span> <a href="{% url 'password_reset' %}"> Забыли пароль?</a></p>
 
 </div>

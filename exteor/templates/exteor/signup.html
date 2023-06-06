@@ -1,0 +1,48 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="features">
+<h2>Регистрация нового пользователя</h2> </br>
+  <form method="post">
+    {% csrf_token %}
+<!--    {{ form.as_p }}-->
+
+    <table class="table table-dark table-sm">
+
+    <tr>
+      <td><h5>Имя пользователя: </h5></td>
+      <td><h5>{{ form.username }} </h5></td>
+      <td> Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.</td>
+    </tr>
+
+    <tr>
+      <td><h5>Пароль: </h5></td>
+      <td><h5>{{ form.password1 }} </h5></td>
+      <td> Минимум 8 символов (буквы, цифры, спецсимволы). Пароль не должен быть слишком простым.</td>
+    </tr>
+    <tr>
+      <td><h5>Подтверждение пароля: </h5></td>
+      <td><h5>{{ form.password2 }} </h5></td>
+      <td> Для подтверждения введите, пожалуйста, пароль ещё раз.</td>
+    </tr>
+    </table>
+    {% if form.errors %}
+       {% for field in form %}
+        {% for error in field.errors %}
+          {{ error|escape }} <br>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+          {{ error|escape }} <br>
+      {% endfor %}
+    {% endif %}
+    <br>
+
+    <h5><button class="btn btn-success btn" type="submit">Зарегистрироваться</button></h5>
+
+  </form>
+</div>
+{% endblock %}
+

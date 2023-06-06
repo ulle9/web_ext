@@ -2,6 +2,7 @@
 //document.getElementById("CreateForm").addEventListener("submit", checkForm)
 document.getElementById("CreateConst").addEventListener("submit", checkConst)
 
+
 function checkConst(event) {
     var el = document.getElementById("CreateConst");
 //    console.log(el);

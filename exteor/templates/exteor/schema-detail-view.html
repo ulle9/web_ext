@@ -1,0 +1,59 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %} {{ schema.name }} {% endblock %}
+
+{% block content %}
+    <div class="features">
+        <h2>{{ schema.schema }}</h2>
+        <p>{{ schema.name }}</p>
+
+        {% if schema.json_file.items %}
+<!--        {{ schema.json_file.items |json_script:'items' }}-->
+            <table class="table table-dark table-sm" id="myTable2">
+              <thead>
+                <tr>
+                  <th width="2%" scope="col">#</th>
+                  <th width="13%" scope="col">Конституента</th>
+                  <th onClick="sortTable(3)" width="5%" scope="col" >Тип</th>
+                  <th width="20%" scope="col">Термин</th>
+                  <th width="27%" scope="col">РС-определение</th>
+                  <th width="7%" scope="col">Статус</th>
+                  <th width="8%" scope="col">Типизация</th>
+                  <th width="5%" scope="col">Изменить</th>
+                  <th width="5%" scope="col">Удалить</th>
+                </tr>
+              </thead>
+        <tbody>
+        </tbody>
+            </table>
+            {% for i in schema.json_file.items %}
+              <table>
+                <tbody>
+                <tr>
+                  <td width="2%">{{forloop.counter}}</td>
+                  <td width="13%">{{i.cstType}}</td>
+                  <td width="5%">{{i.alias}}</td>
+                  <td width="20%">{{i.term.raw}}</td>
+                  <td width="27%">{{i.definition.formal}}</td>
+                  <th width="7%">{{i.parse.status}}</th>
+                  <th width="8%">{{i.parse.typification}}</th>
+                  <td width="5%"><a href="{% url 'const-update' schema.id i.entityUID %}" class = 'btn btn-info btn-sm'>Изменить</a></td>
+                  <td width="5%"><a href="{% url 'const-delete' schema.id i.entityUID %}" class = 'btn btn-danger btn-sm'>Удалить</a></td>
+                </tr>
+              </tbody>
+            </table>
+            {% endfor %}
+        {% else %}
+            <p>Конституенты отсутствуют.</p>
+
+        {% endif %}
+        <br>
+        <a href="{% url 'const-create' schema.id %}" class = 'btn btn-success btn-sm'>Добавить конституенту</a>
+        <a href="{% url 'schema-update' schema.id %}" class = 'btn btn-info btn-sm'>Редактировать схему</a>
+        <a href="{% url 'schema-delete' schema.id %}" class = 'btn btn-danger btn-sm'>Удалить схему</a>
+        <br>
+        <br>
+    </div>
+
+<!--<script src="{% static 'main/js/sort.js' %}" type="text/javascript"></script>-->
+{% endblock %}
