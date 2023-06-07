@@ -8,19 +8,20 @@
         <p>{{ schema.name }}</p>
 
         {% if schema.json_file.items %}
-<!--        {{ schema.json_file.items |json_script:'items' }}-->
-            <table class="table table-dark table-sm" id="myTable2">
+            <table class="table table-dark table-sm" id="myTable2" style="padding-left:5px; padding-right:5px;">
+
               <thead>
                 <tr>
                   <th width="2%" scope="col">#</th>
                   <th width="13%" scope="col">Конституента</th>
-                  <th onClick="sortTable(3)" width="5%" scope="col" >Тип</th>
+<!--                  <th onClick="sortTable(3)" width="5%" scope="col" >Тип</th>-->
+                  <th width="4%" scope="col" >Тип</th>
                   <th width="20%" scope="col">Термин</th>
                   <th width="27%" scope="col">РС-определение</th>
                   <th width="7%" scope="col">Статус</th>
-                  <th width="8%" scope="col">Типизация</th>
-                  <th width="5%" scope="col">Изменить</th>
-                  <th width="5%" scope="col">Удалить</th>
+                  <th width="12%" scope="col">Типизация</th>
+                  <th width="6%" scope="col">Изменить</th>
+                  <th width="6%" scope="col">Удалить</th>
                 </tr>
               </thead>
         <tbody>
@@ -29,16 +30,16 @@
             {% for i in schema.json_file.items %}
               <table>
                 <tbody>
-                <tr>
-                  <td width="2%">{{forloop.counter}}</td>
-                  <td width="13%">{{i.cstType}}</td>
-                  <td width="5%">{{i.alias}}</td>
-                  <td width="20%">{{i.term.raw}}</td>
-                  <td width="27%">{{i.definition.formal}}</td>
-                  <th width="7%">{{i.parse.status}}</th>
-                  <th width="8%">{{i.parse.typification}}</th>
-                  <td width="5%"><a href="{% url 'const-update' schema.id i.entityUID %}" class = 'btn btn-info btn-sm'>Изменить</a></td>
-                  <td width="5%"><a href="{% url 'const-delete' schema.id i.entityUID %}" class = 'btn btn-danger btn-sm'>Удалить</a></td>
+                <tr style="word-break: break-all; padding-left:5px; padding-right:5px;">
+                  <td width="2%" style="padding-left:5px; padding-right:5px;">{{forloop.counter}}</td>
+                  <td width="13%" style="padding-left:5px; padding-right:5px;">{{i.cstType}}</td>
+                  <td width="4%" style="padding-left:5px; padding-right:5px;">{{i.alias}}</td>
+                  <td width="20%" style="padding-left:5px; padding-right:5px;">{{i.term.raw}}</td>
+                  <td width="27%" style="padding-left:5px; padding-right:5px;">{{i.definition.formal}}</td>
+                  <th width="7%" style="padding-left:5px; padding-right:5px;">{{i.parse.status}}</th>
+                  <th width="12%" style="padding-left:5px; padding-right:5px;">{{i.parse.typification}}</th>
+                  <td width="6%" style="word-break: normal; padding-left:5px;"><a href="{% url 'const-update' schema.id i.entityUID %}" class = 'btn btn-info btn-sm'>Изменить</a></td>
+                  <td width="6%" style="word-break: normal;"><a href="{% url 'const-delete' schema.id i.entityUID %}" class = 'btn btn-danger btn-sm'>Удалить</a></td>
                 </tr>
               </tbody>
             </table>

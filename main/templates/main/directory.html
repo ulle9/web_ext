@@ -1,0 +1,71 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Про нас{% endblock %}
+
+{% block content %}
+    <div class="features">
+          <style>
+            table {border: 2px solid white;}
+             tr, td {border: 1px solid white; padding-left:20px;}
+           </style>
+        <h2>Тезаурус по экспликации концептуальных схем в формальных языках</h2>
+        <h5>(упрощенные формулировки, применяемые для данного сайта)</h5>
+        <table >
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Концептуальная схема (КС)</td>
+                <td style="padding-left:10px;">Система, состоящая из понятий и связей между ними, задаваемых, в основном, определениями этих понятий</td>
+            </tr>
+            <br>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">РС-форма КС</td>
+                <td style="padding-left:10px;">КС, эксплицированная в математическом аппарате языка родов структур</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Конституента РС-формы КС</td>
+                <td style="padding-left:10px;">Утверждение или понятие в РС-форме КС. Элементарная единица РС-формы КС</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;" >Типизация конституенты РС-формы КС</td>
+                <td style="padding-left:10px;">Способ наглядного изображения структуры элементов, соответствующих данному понятию.</td>
+            </tr>
+                        <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Биективная переносимость формального выражения родов структур</td>
+                <td style="padding-left:10px;">Характеристика корректности выражения, гарантирующая переносимость этого выражения при замене интерпретации ядра (базисных множеств).</td>
+            </tr>
+                        <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Интерпретируемость формального выражения родов структур</td>
+                <td style="padding-left:10px;">Возможность вычисления выражения за полиномиальное время.</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Базисное множество</td>
+                <td style="padding-left:10px;">Базовое (невыводимое) понятие, интерпретация которого задается разработчиком КС</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Константное множество</td>
+                <td style="padding-left:10px;">Вспомогательное понятие, имеющие общеизвестную интерпретацию в рассматриваемой предметной области</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Родовая структура</td>
+                <td style="padding-left:10px;">Базовое (невыводимое) структурированное понятие, интерпретация которого задается разработчиком КС и ограничивается аксиомами</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Аксиома</td>
+                <td style="padding-left:10px;">Логическое выражение, задающее некоторое усмотренное в предметной области ограничение на базовые и выводимые понятия</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Терм</td>
+                <td style="padding-left:10px;">Выводимое понятие, задаваемое теоретико-множественным выражением</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Терм-функция</td>
+                <td style="padding-left:10px;">Статически типизированное параметризованное теоретико-множественное выражение</td>
+            </tr>
+            <tr>
+                <td style="width:30%; font-weight: bold; padding-left:10px;">Теорема</td>
+                <td style="padding-left:10px;">Логическое выражение, выводимое в проектируемой системе понятий</td>
+            </tr>
+
+        </table>
+
+    </div>
+{% endblock %}

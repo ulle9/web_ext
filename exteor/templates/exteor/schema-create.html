@@ -23,43 +23,30 @@
                     <td>{{ form.common }}</td>
                   </tr>
                 </table>
-                {% if form.non_field_errors %}
-                    {% for error in form.non_field_errors %}
-                        <div class="error_text">{{ error }}</div><br><br>
-                    {% endfor %}
-                {% endif %}
-                <div id = "Ошибка!"></div><br>
-<!--                <h5><span>{{ error }}</span></h5><br>-->
-<!--                <h4><span>{{ form.non_field_errors }}</span></h4>-->
+                {{ form.name.as_hidden }}<br>
+
                 <button class="btn btn-success btn-sm" type="submit">Сохранить</button>
                 <a href="{% url 'exteor-schemas' %}" class = 'btn btn-light btn-sm'>Отмена</a><br>
             </form>
         <br>
+        <br>
+        <h3>Импорт схемы</h3><br>
+
         <form id="Upload_file" method="post" action={% url 'upload_success' %} enctype="multipart/form-data">
                 {% csrf_token %}
-<!--                <table>-->
-<!--                  <tr>-->
-<!--                    <td style="width:40%;">Наименование:</td>-->
-<!--                    <td>{{ upload_form.title }}</td>-->
-<!--                  </tr>-->
-<!--                    <br>-->
-<!--                  <tr>-->
-<!--                    <td style="width:40%">Выбор файла: </td>-->
-<!--                    <td>{{ upload_form.file }}</td>-->
-<!--                  </tr>-->
+                <center><table>
                   <tr>
-                    <td style="width:40%">Выбор файла: </td>
-                    <td><input type="file" id="file" name="file" accept=".json"></td>
+                    <td width="40%">Импорт РС-формы КС из программы Exteor. Выберите файл: </td>
+                    <td style="text-align: left;"><input type="file" id="file" name="file" accept=".json"></td>
                   </tr>
-                </table>
-                {% if form.non_field_errors %}
-                    {% for error in form.non_field_errors %}
-                        <div class="error_text">{{ error }}</div><br><br>
-                    {% endfor %}
-                {% endif %}
-                <div id = "Ошибка!"></div><br>
-            <button class="btn btn-info btn-sm" type="submit">Импорт РС-схемы из Exteor</button>
-            </form>
+                </table></center><br>
+                <button class="btn btn-info btn-sm" type="submit" form="Upload_file">Импортировать</button><br>
+            </form><br>
+
+        {% if error %}
+                <div class="error_text">{{ error }}</div><br><br>
+        {% endif %}
+        <br>
 
     </div>
 

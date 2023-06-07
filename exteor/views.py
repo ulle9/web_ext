@@ -66,13 +66,13 @@ def schema_create(request):
     error = ''
     if request.method == 'POST':
         form = SchemaForm(request.POST)
+        print(form.is_valid())
         if form.is_valid():
             form.save()
             result_form = form.save(commit=False)
             result_form.json_file = {"type": "rsform_0", "title": "default", "alias": "default", "comment": "",
                                      "items": []}
             result_form.name = str(request.user)
-            print(result_form.name, result_form.common)
             result_form.save()
             return redirect('exteor-schemas')
         else:
@@ -81,31 +81,39 @@ def schema_create(request):
             data = {'form': form, 'error': error}
             return render(request, 'exteor/schema-create.html', data)
 
-    form = SchemaForm()
+    form = SchemaForm(initial={'name': str(request.user)})
     upload_form = UploadFileForm
     data = {'form': form, 'upload_form': upload_form, 'error': error}
     return render(request, 'exteor/schema-create.html', data)
 
 def upload_file(request):
-    if request.method == 'POST' and request.FILES['file']:
+    error = ''
+    if request.method == 'POST' and ('file' in request.FILES.keys()):
         myfile = request.FILES['file']
         for chunk in myfile.chunks():
             parsed_json = json.loads(chunk)
-            print(parsed_json)
-        # fs = FileSystemStorage()
-        # filename = fs.save(myfile.name, myfile)
-        # uploaded_file_url = fs.url(filename)
+            form_dict = dict()
+            form_dict['schema'] = parsed_json['title']
+            form_dict['alias'] = parsed_json['alias']
+            form_dict['name'] = str(request.user)
+            break
+
+        form = SchemaForm(form_dict)
+        if form.is_valid():
+            form.save()
+            result_form = form.save(commit=False)
+            result_form.json_file = {"type": "rsform_0", "title": "default", "alias": "default", "comment": "", "items": parsed_json['items']}
+            result_form.save()
+        else:
+            if form.non_field_errors:
+                error = "Такое сочетание 'Наименование - Пользователь' уже существует!"
+            form = SchemaForm(initial={'name': str(request.user)})
+            data = {'form': form, 'error': error}
+            return render(request, 'exteor/schema-create.html', data)
+
         return render(request, 'exteor/upload_success.html')
-
-
-    #     if request.method == "POST":
-    #     upload_form = UploadFileForm(request.POST, request.FILES)
-    #     if upload_form.is_valid():
-    #         print(request.FILES["file"])
-    #         return redirect("/success/url/")
-    # else:
-    #     schema_create(request)
-    # # return render(request, "upload.html", {"form": form})
+    else:
+        return redirect('schema-create')
 
 class SchemaUpdateView(UpdateView):
     model = Exteors

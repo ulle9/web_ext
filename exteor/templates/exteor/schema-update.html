@@ -22,16 +22,18 @@
                     <td>{{ form.common }}</td>
                   </tr>
                 </table>
-                {% if form.non_field_errors %}
-                    {% for error in form.non_field_errors %}
-                        <div class="error_text">{{ error }}</div><br><br>
-                    {% endfor %}
-                {% endif %}
-                <div id = "Ошибка!"></div><br>
+                {{ form.name.as_hidden }}<br>
+
+<!--                <div id = "Ошибка!"></div><br>-->
 <!--                <h4><span>{{ error }}</span></h4><br>-->
 <!--                <h4><span>{{ form.non_field_errors }}</span></h4>-->
                 <button class="btn btn-success btn-sm" type="submit">Сохранить</button>
-                <a href="{{request.META.HTTP_REFERER}}" class = 'btn btn-light btn-sm'>Отмена</a><br>
+                <a href="{{request.META.HTTP_REFERER}}" class = 'btn btn-light btn-sm'>Отмена</a><br><br>
             </form>
+         {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="error_text">{{ error }}</div><br><br>
+            {% endfor %}
+         {% endif %}
     </div>
 {% endblock %}

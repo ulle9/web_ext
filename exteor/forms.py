@@ -10,15 +10,16 @@ class SchemaForm(ModelForm):
 
     class Meta:
         model = Exteors
-        exclude = ['json_file', 'name']
-        fields = ['schema', 'alias', 'common']
-
+        exclude = ['json_file']
+        fields = ['schema', 'alias', 'common', 'name']
+        # field = fields['name']
+        # field.widget = field.hidden_widget()
         choices = [(True, 'Да'), (False, 'Нет')]
         widgets = {
             'schema': TextInput(attrs={'class': 'form-control', 'placeholder': "Наименование схемы"}),
             'alias': TextInput(attrs={'class': 'form-control', 'placeholder': "Краткое наименование схемы"}),
-            'common': Select(choices=choices, attrs={'class': 'form-control', 'placeholder': "Схема будет доступна для просмотра всем пользователям?"})
-            # 'name': TextInput(attrs={'id': 'name_create', 'class': 'form-control', 'placeholder': "Имя"}),
+            'common': Select(choices=choices, attrs={'class': 'form-control', 'placeholder': "Схема будет доступна для просмотра всем пользователям?"}),
+            'name': TextInput(attrs={'id': 'name_create', 'class': 'form-control', 'placeholder': "Имя"}),
         }
 
 class ConstForm(Form):
