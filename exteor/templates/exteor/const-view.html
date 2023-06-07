@@ -8,12 +8,33 @@
         <br>
         <form id="CreateConst" autocomplete="off">
             {% csrf_token %}
-            {{ form.cstType }} {{ form.alias }}<br><br>
-            {{form.convention}}<br><br>
-            {{form.term_raw}}<br><br>
-            {{form.definition_formal}}<br><br>
-            {{form.definition_text_raw}}<br><br><br>
-            {{form.aliases}}
+            <table>
+                <tbody>
+                <tr style="padding-left:5px; padding-right:5px; border: none">
+                  <td width="10%" style="padding-left:5px; text-align: left">Конституента</td>
+                  <td width="40%" style="padding-right:10px;">{{ form.cstType }} </td>
+                  <td width="10%" style="padding-left:5px;" align="center">Идентификатор</td>
+                  <td width="40%" style="padding-left:5px; text-align: left">{{ form.alias }}</td>
+                </tr>
+                <tr style="padding-left:5px; padding-right:5px; border: none">
+                  <td width="10%" style="padding-left:5px; text-align: left">Термин</td>
+                  <td colspan="3" width="90%" >{{ form.term_raw }} </td>
+                </tr>
+                <tr style="padding-left:5px; padding-right:5px; border: none">
+                  <td width="10%" style="padding-left:5px; text-align: left">РС-определение</td>
+                  <td colspan="3" width="90%" >{{ form.definition_formal }} </td>
+                </tr>
+                <tr style="padding-left:5px; padding-right:5px; border: none">
+                  <td width="10%" style="padding-left:5px; text-align: left">Текстовое определение</td>
+                  <td colspan="3" width="90%" >{{ form.definition_text_raw }} </td>
+                </tr>
+                <tr style="padding-left:5px; padding-right:5px; border: none">
+                  <td width="10%" style="padding-left:5px; text-align: left">Комментарий</td>
+                  <td colspan="3" width="90%" >{{ form.convention }} </td>
+                </tr>
+              </tbody>
+            </table>
+            {{form.aliases}}<br>
             <div id = "alias_error"></div>
             <a href="{{request.META.HTTP_REFERER}}" class = 'btn btn-light btn-sm'>Назад</a><br>
 

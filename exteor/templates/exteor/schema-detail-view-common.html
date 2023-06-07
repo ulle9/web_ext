@@ -5,7 +5,7 @@
 {% block content %}
     <div class="features">
         <h2>{{ schema.schema }}</h2>
-        <p>{{ schema.name }}</p>
+        <p>{{ schema.name }}</p><br>
 
         {% if schema.json_file.items %}
             <table class="table table-dark table-sm" style="padding-left:5px; padding-right:5px;">
@@ -29,12 +29,12 @@
                 <tbody>
                 <tr style="word-break: break-all; padding-left:5px; padding-right:5px;">
                   <td width="2%" style="padding-left:5px; padding-right:5px;">{{ forloop.counter }}</td>
-                  <td width="13%" style="padding-left:5px; padding-right:5px;">{{i.cstType}}</td>
+                  <td width="13%" style="padding-left:5px; padding-right:5px;"><strong>{{i.cstType}}</strong></td>
                   <td width="4%" style="padding-left:5px; padding-right:5px;">{{i.alias}}</td>
                   <td width="20%" style="padding-left:5px; padding-right:5px;">{{i.term.raw}}</td>
                   <td width="27%" style="padding-left:5px; padding-right:5px;">{{i.definition.formal}}</td>
-                  <th width="7%" style="padding-left:5px; padding-right:5px;">{{i.parse.status}}</th>
-                  <th width="16%" style="padding-left:5px; padding-right:5px;">{{i.parse.typification}}</th>
+                  <td width="7%" style="padding-left:5px; padding-right:5px;"><strong>{{i.parse.status}}</strong></td>
+                  <td width="16%" style="padding-left:5px; padding-right:5px;"><strong>{{i.parse.typification}}</strong></td>
                   <td width="6%" style="word-break: normal; padding-left:5px;"><a href="{% url 'const-view' schema.id i.entityUID %}" class = 'btn btn-info btn-sm'>Просмотр</a></td>
                 </tr>
               </tbody>

@@ -19,13 +19,10 @@ def exteor_home(request):
 @login_required
 def schemas_home(request):
     schemas = Exteors.objects.filter(name=request.user).order_by('-date_update', 'schema')
-    print('schemas_home', request.user)
     return render(request, 'exteor/schemas-home.html', {'schemas': schemas})
 
 def schemas_home_common(request):
     schemas = Exteors.objects.filter(common=True).order_by('-date_update', 'schema')
-    print('schemas_home_common', request.user)
-    print(schemas)
     return render(request, 'exteor/schemas-home-common.html', {'schemas': schemas})
 
 @login_required
@@ -33,14 +30,12 @@ def schema_details(request, s_id):
     schema = Exteors.objects.get(pk=s_id)
     json_string = json.dumps(schema.json_file, ensure_ascii=False)
     parsed_json = json.loads(pyconcept.check_schema(json_string))
-    # print(c_json)
-    # print(type(schema.json_file), schema.json_file)
-    # schema.json_file = parsed_json
     data = {'schema': schema}
+    status_dict = {'verified': 'ОК', 'incorrect': 'Ошибка'}
     for i, k in enumerate(schema.json_file['items']):
 
         schema.json_file['items'][i]['cstType'] = cst_type_dict[schema.json_file['items'][i]['cstType']]
-        schema.json_file['items'][i]['parse']['status'] = parsed_json['items'][i]['parse']['status']
+        schema.json_file['items'][i]['parse']['status'] = status_dict[parsed_json['items'][i]['parse']['status']]
         schema.json_file['items'][i]['parse']['valueClass'] = parsed_json['items'][i]['parse']['valueClass']
         schema.json_file['items'][i]['parse']['typification'] = parsed_json['items'][i]['parse']['typification']
 
@@ -52,11 +47,11 @@ def schema_details_common(request, s_id):
     json_string = json.dumps(schema.json_file, ensure_ascii=False)
     parsed_json = json.loads(pyconcept.check_schema(json_string))
     data = {'schema': schema}
-
+    status_dict = {'verified': 'ОК', 'incorrect': 'Ошибка'}
     for i, k in enumerate(schema.json_file['items']):
 
         schema.json_file['items'][i]['cstType'] = cst_type_dict[schema.json_file['items'][i]['cstType']]
-        schema.json_file['items'][i]['parse']['status'] = parsed_json['items'][i]['parse']['status']
+        schema.json_file['items'][i]['parse']['status'] = status_dict[parsed_json['items'][i]['parse']['status']]
         schema.json_file['items'][i]['parse']['typification'] = parsed_json['items'][i]['parse']['typification']
 
     return render(request, 'exteor/schema-detail-view-common.html', data)

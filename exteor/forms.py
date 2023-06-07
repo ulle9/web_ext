@@ -26,12 +26,12 @@ class ConstForm(Form):
     choices = [('basic', 'Базисное множество'), ('structure', 'Родовая структура'), ('function', 'Функция'),
                ('predicate', 'Предикат'), ('axiom', 'Аксиома'), ('term', 'Терм'), ('theorem', 'Теорема')]
 
-    cstType = ChoiceField(help_text="Enter cstType", choices=choices, initial='basic', widget=Select(attrs={'class': 'form-control2', 'placeholder': "cstType"}))
-    alias = CharField(help_text="Enter alias", widget=TextInput(attrs={'id': "alias_id", 'class': 'form-control3', 'placeholder': "alias"}))
-    convention = CharField(required=False, help_text="Enter convention", widget=TextInput(attrs={'class': 'form-control', 'placeholder': "convention"}))
-    term_raw = CharField(help_text="Enter term_raw", widget=TextInput(attrs={'class': 'form-control', 'placeholder': "term_raw"}))
-    definition_formal = CharField(required=False, help_text="Enter definition_formal", widget=TextInput(attrs={'id': "inputSign", 'class': 'form-control2', 'placeholder': "definition_formal"}))
-    definition_text_raw = CharField(required=False, help_text="Enter definition_text_raw", widget=TextInput(attrs={'class': 'form-control', 'placeholder': "definition_text_raw"}))
+    cstType = ChoiceField(help_text="Enter cstType", choices=choices, initial='basic', widget=Select(attrs={'class': 'form-control4', 'placeholder': "Конституента"}))
+    alias = CharField(help_text="Enter alias", widget=TextInput(attrs={'id': "alias_id", 'class': 'form-control4', 'placeholder': "Идентификатор"}))
+    convention = CharField(required=False, help_text="Enter convention", widget=TextInput(attrs={'class': 'form-control4', 'placeholder': "Комментарий"}))
+    term_raw = CharField(help_text="Enter term_raw", widget=TextInput(attrs={'class': 'form-control4', 'placeholder': "Термин"}))
+    definition_formal = CharField(required=False, help_text="Enter definition_formal", widget=TextInput(attrs={'id': "inputSign", 'class': 'form-control4', 'placeholder': "РС-определение"}))
+    definition_text_raw = CharField(required=False, help_text="Enter definition_text_raw", widget=TextInput(attrs={'class': 'form-control4', 'placeholder': "Текстовое определение"}))
     aliases = CharField(required=False, widget=HiddenInput(attrs={'id': "aliases"}))
 
 # class SchemaForm(ModelForm):
