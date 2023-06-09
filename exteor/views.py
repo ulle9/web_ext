@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Exteors
-from .forms import SchemaForm, ConstForm, UploadFileForm
+from .forms import SchemaForm, ConstForm, UploadFileForm, CreateUserForm
 from django.views.generic import DetailView, UpdateView, DeleteView
 import pyconcept
 import json
@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 # from django.forms.models import model_to_dict
+from django.contrib.auth.models import User
 
 def exteor_home(request):
     schemas = Articles.objects.order_by('schema')
@@ -85,13 +86,19 @@ def upload_file(request):
     error = ''
     if request.method == 'POST' and ('file' in request.FILES.keys()):
         myfile = request.FILES['file']
-        for chunk in myfile.chunks():
-            parsed_json = json.loads(chunk)
-            form_dict = dict()
-            form_dict['schema'] = parsed_json['title']
-            form_dict['alias'] = parsed_json['alias']
-            form_dict['name'] = str(request.user)
-            break
+        try:
+            for chunk in myfile.chunks():
+                parsed_json = json.loads(chunk)
+                form_dict = dict()
+                form_dict['schema'] = parsed_json['title']
+                form_dict['alias'] = parsed_json['alias']
+                form_dict['name'] = str(request.user)
+                break
+        except:
+            error = "Некорректные формат или структура файла!"
+            form = SchemaForm(initial={'name': str(request.user)})
+            data = {'form': form, 'error': error}
+            return render(request, 'exteor/schema-create.html', data)
 
         form = SchemaForm(form_dict)
         if form.is_valid():
@@ -263,12 +270,17 @@ def const_view(request, s_id, c_id):
     data = {'form': form, 'schema': s_id, 'const': c_id}
     return render(request, 'exteor/const-view.html', data)
 
+# class SignUpView(generic.CreateView):
+#     form_class = UserCreationForm
+#     success_url = reverse_lazy("login")
+#     # fields = ['username', 'email', 'password1', 'password2' ]
+#     template_name = "exteor/signup.html"
+
 class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
+    form_class = CreateUserForm
     success_url = reverse_lazy("login")
     template_name = "exteor/signup.html"
-
-
+    model = User
 
 
 
