@@ -14,8 +14,6 @@ class SchemaForm(ModelForm):
         model = Exteors
         exclude = ['json_file']
         fields = ['schema', 'alias', 'common', 'name']
-        # field = fields['name']
-        # field.widget = field.hidden_widget()
         choices = [(True, 'Да'), (False, 'Нет')]
         widgets = {
             'schema': TextInput(attrs={'class': 'form-control', 'placeholder': "Наименование схемы"}),

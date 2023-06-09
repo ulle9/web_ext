@@ -20,9 +20,4 @@ urlpatterns = [
 
 
     path('', views.exteor_home, name='exteor-home'),
-    # path('create', views.create, name='create'),
-    # path('calculated', views.calculated, name='calculated'),
-    # path('<int:pk>', views.NewsDetailView.as_view(), name='exteor-detail'),
-    # path('<int:pk>/update', views.NewsUpdateView.as_view(), name='exteor-update'),
-    # path('<int:pk>/delete', views.NewsDeleteView.as_view(), name='exteor-delete')
 ]

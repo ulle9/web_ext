@@ -6,10 +6,8 @@ import pyconcept
 import json
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-# from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 
 def exteor_home(request):
@@ -158,7 +156,6 @@ def const_create(request, s_id):
             entry.json_file['items'][idx]['definition']['text']['raw'] = form.cleaned_data['definition_text_raw']
             entry.save()
 
-            # print(entry.json_file)
             return redirect('schema-detail', s_id)
         else:
             error = "Форма заполнена некорректно!"
@@ -213,7 +210,6 @@ def const_update(request, s_id, c_id):
         aliases = ' '.join(aliases)
 
         for id, val in enumerate(entry.json_file['items']):
-            # print(id, val['entityUID'], c_id)
             if val['entityUID'] == c_id:
                 idx = id
                 break
@@ -270,77 +266,10 @@ def const_view(request, s_id, c_id):
     data = {'form': form, 'schema': s_id, 'const': c_id}
     return render(request, 'exteor/const-view.html', data)
 
-# class SignUpView(generic.CreateView):
-#     form_class = UserCreationForm
-#     success_url = reverse_lazy("login")
-#     # fields = ['username', 'email', 'password1', 'password2' ]
-#     template_name = "exteor/signup.html"
-
 class SignUpView(generic.CreateView):
     form_class = CreateUserForm
     success_url = reverse_lazy("login")
     template_name = "exteor/signup.html"
     model = User
 
-
-
 cst_type_dict = {'basic': 'Базисное множество', 'structure': 'Родовая структура', 'function': 'Функция', 'predicate': 'Предикат', 'axiom': 'Аксиома', 'term': 'Терм', 'theorem': 'Теорема'}
-
-test_json = '''{"type": "rsform", "title": "default","alias": "default","comment": "", "items": [{"entityUID": 1023383816, "type": "constituenta", "cstType": "basic","alias": "X1", "convention": "", "term": {"raw": "", "resolved": "",  "forms": []}, "definition": {"formal": "", "text": { "raw": "", "resolved": ""}}},{"entityUID": 1877659352, "type": "constituenta", "cstType": "basic", "alias": "X2", "convention": "", "term": {"raw": "", "resolved": "", "forms": []}, "definition": {"formal": "", "text": {"raw": "", "resolved": ""}}},{"entityUID": 1115937389, "type": "constituenta", "cstType": "structure", "alias": "S1", "convention": "", "term": {"raw": "", "resolved": "", "forms": []}, "definition": {"formal": "ℬ(X1×X1)", "text": { "raw": "", "resolved": ""}}},{"entityUID": 94433573, "type": "constituenta", "cstType": "structure", "alias": "S2", "convention": "", "term": { "raw": "", "resolved": "", "forms": []}, "definition": { "formal": "ℬ(X1×X2)", "text": {"raw": "", "resolved": ""}}}]}'''
-
-
-# class NewsDetailView(DetailView):
-#     model = Articles
-#     context_object_name = 'article'
-#     template_name = 'exteor/detail-view.html'
-#
-# class NewsUpdateView(UpdateView):
-#     model = Articles
-#     template_name = 'exteor/create.html'
-#     form_class = ArticlesForm
-#
-# class NewsDeleteView(DeleteView):
-#     model = Articles
-#     template_name = 'exteor/exteor-delete.html'
-#     success_url = '/exteor'
-#
-# def create(request):
-#     error = ''
-#     if request.method == 'POST':
-#         #print('request.body', request.body)
-#         form = ArticlesForm(request.POST)
-#
-#         if form.is_valid():
-#             new_form = form.save(commit=False)
-#             new_form.result = str3_module.str3_func(new_form.schema, new_form.name, new_form.type)
-#             new_form.save()
-#             id = list(Articles.objects.values('id'))[-1]['id']
-#             data = {'form': new_form, 'error': error, 'result': new_form.result, 'id': id}
-#             #print("last_schema[-1]", last_schema[-1]['id'])
-#             return render(request, 'exteor/calculated.html', data)
-#         else:
-#             error = "Форма заполнена некорректно!"
-#
-#     form = ArticlesForm()
-#     data = {'form': form, 'error': error}
-#     return render(request, 'exteor/create.html', data)
-
-# def calculated(request):
-#     error = ''
-#
-#     if request.method == 'POST':
-#         print('SECOND')
-#         form = ArticlesForm(request.POST)
-#         for field in form:
-#              print("Field Error:", field.name, field.errors)
-#
-#         if form.is_valid():
-#             print('THIRD')
-#             new_form = form.save(commit=False)
-#             new_form.result = (str3_module.str3_func(new_form.schema, new_form.name, new_form.type))
-#             new_form.save()
-#             return redirect('news_home')
-#
-#     form = ArticlesForm()
-#     data = {'form': form, 'error': error}
-#     return render(request, 'exteor/create.html', data)
