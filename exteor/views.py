@@ -64,7 +64,7 @@ def schema_create(request):
         if form.is_valid():
             form.save()
             result_form = form.save(commit=False)
-            result_form.json_file = {"type": "rsform_0", "title": "default", "alias": "default", "comment": "",
+            result_form.json_file = {"type": "rsform", "title": "default", "alias": "default", "comment": "",
                                      "items": []}
             result_form.name = str(request.user)
             result_form.save()
@@ -102,7 +102,7 @@ def upload_file(request):
         if form.is_valid():
             form.save()
             result_form = form.save(commit=False)
-            result_form.json_file = {"type": "rsform_0", "title": "default", "alias": "default", "comment": "", "items": parsed_json['items']}
+            result_form.json_file = {"type": "rsform", "title": form_dict['schema'], "alias": form_dict['alias'], "comment": "", "items": parsed_json['items']}
             result_form.save()
         else:
             if form.non_field_errors:
