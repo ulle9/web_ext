@@ -19,5 +19,5 @@ urlpatterns = [
     path('upload_file', views.upload_file, name="upload_success"),
 
 
-    path('', views.exteor_home, name='exteor-home'),
+    # path('', views.exteor_home, name='exteor-home'),
 ]

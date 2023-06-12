@@ -10,9 +10,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.models import User
 
-def exteor_home(request):
-    schemas = Articles.objects.order_by('schema')
-    return render(request, 'exteor/exteor-home.html', {'schemas': schemas})
+from zipfile import ZipFile, is_zipfile, ZIP_DEFLATED, ZIP_STORED
+from io import BytesIO
 
 #SCHEMAS
 @login_required
@@ -29,7 +28,28 @@ def schema_details(request, s_id):
     schema = Exteors.objects.get(pk=s_id)
     json_string = json.dumps(schema.json_file, ensure_ascii=False)
     parsed_json = json.loads(pyconcept.check_schema(json_string))
-    data = {'schema': schema}
+
+    ''' Write json data to TRS file including version info '''
+    parsed_json["claimed"] = False
+    parsed_json["selection"] = []
+    parsed_json["version"] = 16
+    parsed_json["versionInfo"] = "Exteor 4.8.13.1000 - 30/05/2022"
+
+    content = BytesIO()
+    file_data = json.dumps(parsed_json, indent=4, ensure_ascii=False)
+    print(type(file_data))
+    with ZipFile(content, 'w', compression=ZIP_DEFLATED) as archive:
+        archive.writestr('document.json', data=file_data)
+
+    trs = dict()
+
+    trs['trs'] = content.getvalue()
+    # print(trs['trs'])
+
+
+
+    data = {'schema': schema, 'trs': trs}
+
     status_dict = {'verified': 'ОК', 'incorrect': 'Ошибка'}
     for i, k in enumerate(schema.json_file['items']):
 
@@ -60,7 +80,6 @@ def schema_create(request):
     error = ''
     if request.method == 'POST':
         form = SchemaForm(request.POST)
-        print(form.is_valid())
         if form.is_valid():
             form.save()
             result_form = form.save(commit=False)
@@ -71,7 +90,7 @@ def schema_create(request):
             return redirect('exteor-schemas')
         else:
             if form.non_field_errors:
-                error = "Такое сочетание 'Наименование - Пользователь' уже существует!"
+                error = "Схема с таким наименованием уже существует!"
             data = {'form': form, 'error': error}
             return render(request, 'exteor/schema-create.html', data)
 
@@ -84,14 +103,15 @@ def upload_file(request):
     error = ''
     if request.method == 'POST' and ('file' in request.FILES.keys()):
         myfile = request.FILES['file']
+
         try:
-            for chunk in myfile.chunks():
-                parsed_json = json.loads(chunk)
+            with ZipFile(myfile, 'r') as archive:
+                json_data = archive.read('document.json')
+                parsed_json = json.loads(json_data)
                 form_dict = dict()
                 form_dict['schema'] = parsed_json['title']
                 form_dict['alias'] = parsed_json['alias']
                 form_dict['name'] = str(request.user)
-                break
         except:
             error = "Некорректные формат или структура файла!"
             form = SchemaForm(initial={'name': str(request.user)})
@@ -99,6 +119,7 @@ def upload_file(request):
             return render(request, 'exteor/schema-create.html', data)
 
         form = SchemaForm(form_dict)
+
         if form.is_valid():
             form.save()
             result_form = form.save(commit=False)
@@ -106,10 +127,38 @@ def upload_file(request):
             result_form.save()
         else:
             if form.non_field_errors:
-                error = "Такое сочетание 'Наименование - Пользователь' уже существует!"
+                error = "Схема с таким наименованием уже существует!"
             form = SchemaForm(initial={'name': str(request.user)})
             data = {'form': form, 'error': error}
             return render(request, 'exteor/schema-create.html', data)
+
+
+        # try:
+        #     for chunk in myfile.chunks():
+        #         parsed_json = json.loads(chunk)
+        #         form_dict = dict()
+        #         form_dict['schema'] = parsed_json['title']
+        #         form_dict['alias'] = parsed_json['alias']
+        #         form_dict['name'] = str(request.user)
+        #         break
+        # except:
+        #     error = "Некорректные формат или структура файла!"
+        #     form = SchemaForm(initial={'name': str(request.user)})
+        #     data = {'form': form, 'error': error}
+        #     return render(request, 'exteor/schema-create.html', data)
+        #
+        # form = SchemaForm(form_dict)
+        # if form.is_valid():
+        #     form.save()
+        #     result_form = form.save(commit=False)
+        #     result_form.json_file = {"type": "rsform", "title": form_dict['schema'], "alias": form_dict['alias'], "comment": "", "items": parsed_json['items']}
+        #     result_form.save()
+        # else:
+        #     if form.non_field_errors:
+        #         error = "Такое сочетание 'Наименование - Пользователь' уже существует!"
+        #     form = SchemaForm(initial={'name': str(request.user)})
+        #     data = {'form': form, 'error': error}
+        #     return render(request, 'exteor/schema-create.html', data)
 
         return render(request, 'exteor/upload_success.html')
     else:

@@ -52,9 +52,10 @@
         <a href="{% url 'const-create' schema.id %}" class = 'btn btn-success btn-sm'>Добавить конституенту</a>
         <a href="{% url 'schema-update' schema.id %}" class = 'btn btn-info btn-sm'>Редактировать схему</a>
         <a href="{% url 'schema-delete' schema.id %}" class = 'btn btn-danger btn-sm'>Удалить схему</a>
-        <a href="data:application/json;charset=utf-8, {{schema.json_file}}" download="filename.json" class = 'btn btn-warning btn-sm'>Выгрузить схему</a>
+        <a href="data:application/zip;  {{trs.trs}}" download="schema.trs" class = 'btn btn-warning btn-sm'>Выгрузить схему</a>
         <br>
         <br>
+        <p>{{trs.trs}}</p>
     </div>
 
 <!--<script src="{% static 'main/js/sort.js' %}" type="text/javascript"></script>-->
