@@ -39,24 +39,15 @@
                 </tr>
               </tbody>
             </table>
-<!--                <div class = "alert alert-warning">-->
-<!--                <a>cstType:</a> {{i.cstType}}<br>-->
-<!--                <a>alias:</a> {{i.alias}}<br>-->
-<!--                <a>convention:</a> {{i.convention}}<br>-->
-<!--                <a>term.raw:</a> {{i.term.raw}}<br>-->
-<!--                <a>definition.formal:</a> {{i.definition.formal}}<br>-->
-<!--                <a>definition.text.raw:</a> {{i.definition.text.raw}}<br>-->
-<!--                <a href="{% url 'const-update' schema.id i.entityUID %}" class = 'btn btn-info btn-sm'>Изменить конституенту</a>-->
-<!--                <a href="{% url 'const-delete' schema.id i.entityUID %}" class = 'btn btn-danger btn-sm'>Удалить конституенту</a>-->
-<!--        <br>-->
-<!--                </div>-->
+
             {% endfor %}
         {% else %}
             <p>Конституенты отсутствуют.</p>
 
         {% endif %}
         <br>
-
+                <a href="{% url 'schema_export' schema.id %}" class = 'btn btn-warning btn-sm'>Выгрузить схему</a>
+        <br>
     </div>
 
 {% endblock %}

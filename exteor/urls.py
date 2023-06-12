@@ -17,6 +17,7 @@ urlpatterns = [
     path('schemas/<int:s_id>/<int:c_id>/const-view', views.const_view, name='const-view'),
     path('signup', views.SignUpView.as_view(), name="signup"),
     path('upload_file', views.upload_file, name="upload_success"),
+    path('export_file/<int:s_id>', views.schema_export, name="schema_export"),
 
 
     # path('', views.exteor_home, name='exteor-home'),

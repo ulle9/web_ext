@@ -12,6 +12,9 @@ from django.contrib.auth.models import User
 
 from zipfile import ZipFile, is_zipfile, ZIP_DEFLATED, ZIP_STORED
 from io import BytesIO
+from django.http import HttpResponse
+from transliterate import translit
+
 
 #SCHEMAS
 @login_required
@@ -29,27 +32,6 @@ def schema_details(request, s_id):
     json_string = json.dumps(schema.json_file, ensure_ascii=False)
     parsed_json = json.loads(pyconcept.check_schema(json_string))
 
-    ''' Write json data to TRS file including version info '''
-    parsed_json["claimed"] = False
-    parsed_json["selection"] = []
-    parsed_json["version"] = 16
-    parsed_json["versionInfo"] = "Exteor 4.8.13.1000 - 30/05/2022"
-
-    content = BytesIO()
-    file_data = json.dumps(parsed_json, indent=4, ensure_ascii=False)
-    print(type(file_data))
-    with ZipFile(content, 'w', compression=ZIP_DEFLATED) as archive:
-        archive.writestr('document.json', data=file_data)
-
-    trs = dict()
-
-    trs['trs'] = content.getvalue()
-    # print(trs['trs'])
-
-
-
-    data = {'schema': schema, 'trs': trs}
-
     status_dict = {'verified': 'ОК', 'incorrect': 'Ошибка'}
     for i, k in enumerate(schema.json_file['items']):
 
@@ -58,8 +40,32 @@ def schema_details(request, s_id):
         schema.json_file['items'][i]['parse']['valueClass'] = parsed_json['items'][i]['parse']['valueClass']
         schema.json_file['items'][i]['parse']['typification'] = parsed_json['items'][i]['parse']['typification']
 
-    # print(parsed_json)
+    data = {'schema': schema}
     return render(request, 'exteor/schema-detail-view.html', data)
+
+def schema_export(request, s_id):
+    schema = Exteors.objects.get(pk=s_id)
+    json_string = json.dumps(schema.json_file, ensure_ascii=False)
+    parsed_json = json.loads(pyconcept.check_schema(json_string))
+    parsed_json["claimed"] = False
+    parsed_json["selection"] = []
+    parsed_json["version"] = 16
+    parsed_json["versionInfo"] = "Exteor 4.8.13.1000 - 30/05/2022"
+
+    content = BytesIO()
+    file_data = json.dumps(parsed_json, indent=4, ensure_ascii=False)
+    # print(schema.schema)
+    # print(schema.name)
+    # print(schema.alias)
+    with ZipFile(content, 'w', compression=ZIP_DEFLATED) as archive:
+        archive.writestr('document.json', data=file_data)
+
+    filename = translit(schema.alias, 'ru', reversed=True) + '.trs'
+
+    response = HttpResponse(content.getvalue(), content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
+
+    return response
 
 def schema_details_common(request, s_id):
     schema = Exteors.objects.get(pk=s_id)
